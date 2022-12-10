@@ -15,21 +15,29 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.provedorapp.R;
 import com.example.provedorapp.SQLite;
+import com.example.provedorapp.adapter.CategoriasAdapter;
 import com.example.provedorapp.adapter.MiniProductosAdapter;
+import com.example.provedorapp.clases.Categoria;
 import com.example.provedorapp.clases.MiniProducto;
 import com.example.provedorapp.databinding.FragmentProductosBinding;
 
 import java.util.ArrayList;
 
-public class ProductosFragment extends Fragment implements MiniProductosAdapter.OnProductoClick {
+public class ProductosFragment extends Fragment implements MiniProductosAdapter.OnProductoClick,
+        CategoriasAdapter.OnCategoriaClick {
 
+    private ArrayList<MiniProducto> productos;
     private FragmentProductosBinding binding;
     private MiniProductosAdapter miniProductosAdapter;
     private RecyclerView recyclerProductos;
+
+    private CategoriasAdapter categoriasAdapter;
+    private RecyclerView recyclerCategorias;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -40,17 +48,32 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
         binding = FragmentProductosBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        recyclerProductos = binding.recyclerProductos;
-        recyclerProductos.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        miniProductosAdapter = new MiniProductosAdapter(getActivity(), this);
-        miniProductosAdapter.submitList(getProductos());
-        recyclerProductos.setAdapter(miniProductosAdapter);
-        
+        init();
+
 //        if (getActivity() != null){
 //            System.out.println("TOCABOTONES " + getActivity() );
 //        }
 
         return root;
+    }
+
+    private void init() {
+
+        productos = getProductos();
+
+        recyclerProductos = binding.recyclerProductos;
+        recyclerProductos.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        miniProductosAdapter = new MiniProductosAdapter(getActivity(), this);
+        miniProductosAdapter.submitList(productos);
+        recyclerProductos.setAdapter(miniProductosAdapter);
+
+        ArrayList<Categoria> categorias = getCategorias();
+        recyclerCategorias = binding.recyclerCategorias;
+        recyclerCategorias.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL,false));
+        categoriasAdapter = new CategoriasAdapter(getActivity(), this);
+        categoriasAdapter.submitList(categorias);
+        recyclerCategorias.setAdapter(categoriasAdapter);
+
     }
 
     @Override
@@ -89,6 +112,29 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
         return miniProductos;
     }
 
+    public ArrayList<Categoria> getCategorias() {
+
+        ArrayList<Categoria> categorias = new ArrayList<>();
+
+        SQLite sqLite = new SQLite(getActivity());
+
+        SQLiteDatabase db = sqLite.getWritableDatabase();
+
+        Cursor cursorProducto = db.rawQuery("SELECT idCategoria, nombreCategoria," +
+                " imgPath FROM categorias", null);
+
+        while (cursorProducto.moveToNext()) {
+            Categoria categoria = new Categoria();
+
+            categoria.setId(cursorProducto.getInt(0));
+            categoria.setCategoria(cursorProducto.getString(1));
+            categoria.setImg(cursorProducto.getString(2));
+
+            categorias.add(categoria);
+        }
+        return categorias;
+    }
+
     @Override
     public boolean onAgregarPedido(MiniProducto producto) {
         return false;
@@ -96,6 +142,20 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
 
     @Override
     public void onVerProducto(MiniProducto producto) {
+
+    }
+
+    @Override
+    public void OnCategoria(Categoria categoria) {
+        ArrayList<MiniProducto> productosFiltrados = new ArrayList<>();
+
+        for (MiniProducto mp : this.productos){
+            if (mp.getCategoria() == categoria.getId()) {
+                productosFiltrados.add(mp);
+            }
+        }
+
+        miniProductosAdapter.submitList(productosFiltrados);
 
     }
 }
