@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@color/white"
+    android:minWidth="310dp"
+    android:minHeight="95dp"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imgProducto"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvNombreProducto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:maxEms="8"
+        android:singleLine="false"
+        android:text="Dulce de Leche Tradicional Frasco MrTango"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imgProducto"
+        app:layout_constraintTop_toTopOf="@+id/imgProducto" />
+
+    <TextView
+        android:id="@+id/tvVariacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7 Kg"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/precioView"
+        app:layout_constraintStart_toStartOf="@+id/tvNombreProducto"
+        app:layout_constraintTop_toBottomOf="@+id/tvNombreProducto" />
+
+    <com.example.provedorapp.componentes.PrecioView
+        android:id="@+id/precioView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgProducto"
+        app:layout_constraintStart_toEndOf="@+id/imgProducto" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

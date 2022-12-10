@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_productos">
+
+    <fragment
+        android:id="@+id/navigation_productos"
+        android:name="com.example.provedorapp.ui.productos.ProductosFragment"
+        android:label="@string/title_productos"
+        tools:layout="@layout/fragment_productos" />
+
+    <fragment
+        android:id="@+id/navigation_pedidos"
+        android:name="com.example.provedorapp.ui.pedidos.PedidosFragment"
+        android:label="@string/title_pedidos"
+        tools:layout="@layout/fragment_pedidos" />
+
+    <fragment
+        android:id="@+id/navigation_pedidos_actual"
+        android:name="com.example.provedorapp.ui.pedidoActual.PedidoActualFragment"
+        android:label="@string/title_pedido_actual"
+        tools:layout="@layout/fragment_pedido_actual" />
+</navigation>
