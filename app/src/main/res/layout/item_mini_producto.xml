@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:background="@color/white"
-    android:minWidth="310dp"
+    android:minWidth="400dp"
     android:minHeight="95dp"
     android:padding="10dp">
 
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:maxEms="8"
+        android:maxWidth="200dip"
         android:singleLine="false"
         android:text="Dulce de Leche Tradicional Frasco MrTango"
         android:textColor="@color/black"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:text="7 Kg"
         android:textColor="@color/black"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/precioView"
         app:layout_constraintStart_toStartOf="@+id/tvNombreProducto"

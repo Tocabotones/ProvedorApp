@@ -12,6 +12,12 @@ public class Categoria {
     public Categoria() {
     }
 
+    public Categoria(int id, String categoria, String img) {
+        this.id = id;
+        this.categoria = categoria;
+        this.img = img;
+    }
+
     public int getId() {
         return id;
     }

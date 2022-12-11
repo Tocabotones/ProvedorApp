@@ -42,6 +42,8 @@ public class MiniProductosAdapter extends ListAdapter<MiniProducto
     public void onBindViewHolder(@NonNull MiniProductoView holder, int position) {
         MiniProducto miniProducto = getItem(position);
 
+
+        holder.tvNombreProducto.setText(miniProducto.getNombre());
         holder.tvVariacion.setText(miniProducto.getVariacion());
         Glide.with(context)
                 .load(miniProducto.getImg())
@@ -68,12 +70,14 @@ public class MiniProductosAdapter extends ListAdapter<MiniProducto
         private ImageView imgProducto;
         private PrecioView precioView;
         private TextView tvVariacion;
+        private TextView tvNombreProducto;
 
         public MiniProductoView(@NonNull ItemMiniProductoBinding binding) {
             super(binding.getRoot());
             imgProducto = binding.imgProducto;
             precioView = binding.precioView;
             tvVariacion = binding.tvVariacion;
+            tvNombreProducto = binding.tvNombreProducto;
         }
     }
 

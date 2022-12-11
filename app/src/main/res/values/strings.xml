@@ -3,4 +3,5 @@
     <string name="title_productos">Productos</string>
     <string name="title_pedidos">Pedidos</string>
     <string name="title_pedido_actual">Pedido Actual</string>
+    <string name="buscar">Buscar</string>
 </resources>
