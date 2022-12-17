@@ -2,6 +2,7 @@ package com.example.provedorapp.ui.productos;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,9 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,13 +32,18 @@ import com.example.provedorapp.adapter.MiniProductosAdapter;
 import com.example.provedorapp.clases.Categoria;
 import com.example.provedorapp.clases.MiniProducto;
 import com.example.provedorapp.databinding.FragmentProductosBinding;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
+
 public class ProductosFragment extends Fragment implements MiniProductosAdapter.OnProductoClick,
         CategoriasAdapter.OnCategoriaClick {
 
+    private ItemTouchHelper itemTouchHelper;
     private ArrayList<MiniProducto> productos;
     private FragmentProductosBinding binding;
     private MiniProductosAdapter miniProductosAdapter;
@@ -47,6 +55,7 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
     private EditText etxBuscador;
 
     private Integer categoria;
+
 
 
 
@@ -113,6 +122,9 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
 
             }
         });
+
+        itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerProductos);
     }
 
     @Override
@@ -201,7 +213,7 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
     }
 
     public void filtrarCategoria(int cat){
-        if (categoria == -1){
+        if (cat == -1){
             miniProductosAdapter.submitList(productos);
         } else {
             ArrayList<MiniProducto> productosFiltrados = new ArrayList<>();
@@ -216,6 +228,75 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
         }
 
     }
+
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(getActivity(),R.color.red))
+                    .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
+                    .addSwipeRightBackgroundColor(ContextCompat.getColor(getActivity(),R.color.celesteClaro))
+                    .addSwipeRightActionIcon(R.drawable.ic_baseline_archive_24)
+                    .create()
+                    .decorate();
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            int posicion = viewHolder.getLayoutPosition();
+            MiniProducto productoBorrado = productos.get(posicion);
+
+            switch (direction){
+                case ItemTouchHelper.LEFT:
+
+                    productos.remove(posicion);
+                    miniProductosAdapter.notifyItemRemoved(posicion);
+
+                    Snackbar snackbar = Snackbar.make(binding.fragmentCl,"Producto Eliminado",
+                            BaseTransientBottomBar.LENGTH_SHORT)
+                            .setAction("Deshacer", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    deshacer(posicion,productoBorrado);
+                                    Snackbar.make(binding.fragmentCl,
+                                            "El producto se ha vuelto a agregar",
+                                            BaseTransientBottomBar.LENGTH_SHORT);
+                                }
+                            });
+
+                    snackbar.show();
+                    break;
+                case ItemTouchHelper.RIGHT:
+                    Snackbar.make(binding.fragmentCl,"Producto agregado al pedido",
+                            BaseTransientBottomBar.LENGTH_SHORT).show();
+
+                    productos.remove(posicion);
+                    miniProductosAdapter.notifyItemRemoved(posicion);
+
+                    deshacer(posicion,productoBorrado);
+
+                    break;
+            }
+
+
+
+        }
+
+        public void deshacer(int posicion, MiniProducto productoBorrado){
+            productos.add(posicion,productoBorrado);
+            miniProductosAdapter.notifyItemInserted(posicion);
+        }
+    };
+
     @Override
     public boolean onAgregarPedido(MiniProducto producto) {
         return false;
@@ -228,7 +309,10 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
 
     @Override
     public void OnCategoria(Categoria categoria) {
-        filtrarCategoria(categoria.getId());
-        this.categoria = categoria.getId();
+        if (this.categoria != categoria.getId()){
+            filtrarCategoria(categoria.getId());
+            this.categoria = categoria.getId();
+        }
+
     }
 }
