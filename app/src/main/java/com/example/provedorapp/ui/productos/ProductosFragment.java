@@ -1,5 +1,6 @@
 package com.example.provedorapp.ui.productos;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Canvas;
@@ -16,6 +17,10 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -32,6 +37,7 @@ import com.example.provedorapp.adapter.MiniProductosAdapter;
 import com.example.provedorapp.clases.Categoria;
 import com.example.provedorapp.clases.MiniProducto;
 import com.example.provedorapp.databinding.FragmentProductosBinding;
+import com.example.provedorapp.ui.gestionStock.GestionStock;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -55,9 +61,6 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
     private EditText etxBuscador;
 
     private Integer categoria;
-
-
-
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -90,9 +93,9 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
 
 
         ArrayList<Categoria> categorias = getCategorias();
-        categorias.add(new Categoria(-1,"Todos","https://imgur.com/L8eF4Tm.png"));
+        categorias.add(new Categoria(-1, "Todos", "https://imgur.com/L8eF4Tm.png"));
         recyclerCategorias = binding.recyclerCategorias;
-        recyclerCategorias.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL,false));
+        recyclerCategorias.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.HORIZONTAL, false));
         categoriasAdapter = new CategoriasAdapter(getActivity(), this);
         categoriasAdapter.submitList(categorias);
         recyclerCategorias.setAdapter(categoriasAdapter);
@@ -109,7 +112,7 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String cadena = String.valueOf(charSequence);
 
-                if (!cadena.isEmpty()){
+                if (!cadena.isEmpty()) {
                     filtrar(cadena);
                 } else {
                     filtrarCategoria(categoria);
@@ -144,7 +147,7 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
         Cursor cursorProducto = db.rawQuery("SELECT productos.idProducto, valorVariante, nombreProducto," +
                 " idCategoria, precio, precioDescuento, stock, imgPath  " +
                 "FROM productos INNER JOIN variantes ON productos.idProducto = variantes.idProducto " +
-                "ORDER BY productos.idProducto, valorVariante", null);
+                "ORDER BY  stock DESC,productos.idProducto, valorVariante ", null);
 
         while (cursorProducto.moveToNext()) {
             MiniProducto miniProducto = new MiniProducto();
@@ -163,21 +166,21 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
         return miniProductos;
     }
 
-    public void filtrar(String filtro){
+    public void filtrar(String filtro) {
 
         filtro = filtro.toLowerCase(Locale.ROOT);
 
         ArrayList<MiniProducto> productosFiltrados = new ArrayList<>();
 
-        for (MiniProducto mp : miniProductosAdapter.getCurrentList()){
-            String [] nombre = mp.getNombre().split("\\s");
+        for (MiniProducto mp : getProductos()) {
+            String[] nombre = mp.getNombre().split("\\s");
             int i = 0;
             boolean valido = false;
 
             do {
                 String palabra = nombre[i].toLowerCase(Locale.ROOT);
 
-                if (palabra.startsWith(filtro)){
+                if (palabra.startsWith(filtro)) {
                     productosFiltrados.add(mp);
                     valido = true;
                 }
@@ -186,9 +189,9 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
 
 
         }
-
         miniProductosAdapter.submitList(productosFiltrados);
     }
+
     public ArrayList<Categoria> getCategorias() {
 
         ArrayList<Categoria> categorias = new ArrayList<>();
@@ -212,13 +215,13 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
         return categorias;
     }
 
-    public void filtrarCategoria(int cat){
-        if (cat == -1){
-            miniProductosAdapter.submitList(productos);
+    public void filtrarCategoria(int cat) {
+        if (cat == -1) {
+            miniProductosAdapter.submitList(getProductos());
         } else {
             ArrayList<MiniProducto> productosFiltrados = new ArrayList<>();
 
-            for (MiniProducto mp : this.productos){
+            for (MiniProducto mp : getProductos()) {
                 if (mp.getCategoria() == cat) {
                     productosFiltrados.add(mp);
                 }
@@ -230,18 +233,22 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
     }
 
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
         }
 
+
         @Override
         public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+            float myDx = 0;
+
             new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(getActivity(),R.color.red))
-                    .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
-                    .addSwipeRightBackgroundColor(ContextCompat.getColor(getActivity(),R.color.celesteClaro))
+//                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(getActivity(),R.color.red))
+//                    .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
+                    .addSwipeRightBackgroundColor(ContextCompat.getColor(getActivity(), R.color.celesteClaro))
                     .addSwipeRightActionIcon(R.drawable.ic_baseline_archive_24)
                     .create()
                     .decorate();
@@ -250,49 +257,55 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
         }
 
         @Override
+        public int getSwipeDirs(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+            return super.getSwipeDirs(recyclerView, viewHolder);
+        }
+
+        @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
             int posicion = viewHolder.getLayoutPosition();
             MiniProducto productoBorrado = productos.get(posicion);
 
-            switch (direction){
+            switch (direction) {
                 case ItemTouchHelper.LEFT:
 
                     productos.remove(posicion);
                     miniProductosAdapter.notifyItemRemoved(posicion);
 
-                    Snackbar snackbar = Snackbar.make(binding.fragmentCl,"Producto Eliminado",
-                            BaseTransientBottomBar.LENGTH_SHORT)
-                            .setAction("Deshacer", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    deshacer(posicion,productoBorrado);
-                                    Snackbar.make(binding.fragmentCl,
-                                            "El producto se ha vuelto a agregar",
-                                            BaseTransientBottomBar.LENGTH_SHORT);
-                                }
-                            });
+                    deshacer(posicion, productoBorrado);
 
-                    snackbar.show();
+////                    Snackbar snackbar = Snackbar.make(binding.fragmentCl,"Producto Eliminado",
+////                            BaseTransientBottomBar.LENGTH_SHORT)
+////                            .setAction("Deshacer", new View.OnClickListener() {
+////                                @Override
+////                                public void onClick(View view) {
+////                                    deshacer(posicion,productoBorrado);
+////                                    Snackbar.make(binding.fragmentCl,
+////                                            "El producto se ha vuelto a agregar",
+////                                            BaseTransientBottomBar.LENGTH_SHORT);
+////                                }
+////                            });
+////
+////                    snackbar.show();
                     break;
                 case ItemTouchHelper.RIGHT:
-                    Snackbar.make(binding.fragmentCl,"Producto agregado al pedido",
+                    Snackbar.make(binding.fragmentCl, "Producto agregado al pedido",
                             BaseTransientBottomBar.LENGTH_SHORT).show();
 
                     productos.remove(posicion);
                     miniProductosAdapter.notifyItemRemoved(posicion);
 
-                    deshacer(posicion,productoBorrado);
+                    deshacer(posicion, productoBorrado);
 
                     break;
             }
 
 
-
         }
 
-        public void deshacer(int posicion, MiniProducto productoBorrado){
-            productos.add(posicion,productoBorrado);
+        public void deshacer(int posicion, MiniProducto productoBorrado) {
+            productos.add(posicion, productoBorrado);
             miniProductosAdapter.notifyItemInserted(posicion);
         }
     };
@@ -308,11 +321,37 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
     }
 
     @Override
+    public void onStockClick(MiniProducto producto) {
+        Intent intent = new Intent(getActivity(), GestionStock.class);
+        intent.putExtra("idProducto", producto.getId());
+        intent.putExtra("valorVariante", producto.getVariacion());
+        getsActivityForResultLauncherActualizarProductos.launch(intent);
+    }
+
+    @Override
     public void OnCategoria(Categoria categoria) {
-        if (this.categoria != categoria.getId()){
+        if (this.categoria != categoria.getId()) {
             filtrarCategoria(categoria.getId());
             this.categoria = categoria.getId();
         }
-
     }
+
+    ActivityResultLauncher<Intent> getsActivityForResultLauncherActualizarProductos = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == 1) {
+                        productos.clear();
+                        productos = getProductos();
+                        miniProductosAdapter.submitList(productos);
+                        recyclerProductos.setAdapter(miniProductosAdapter);
+                        filtrarCategoria(categoria);
+                        String cadena = etxBuscador.getText().toString();
+                        filtrar(cadena);
+
+                    }
+                }
+            }
+    );
 }

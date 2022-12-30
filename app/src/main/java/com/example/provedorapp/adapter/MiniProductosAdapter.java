@@ -2,6 +2,7 @@ package com.example.provedorapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ import com.example.provedorapp.R;
 import com.example.provedorapp.clases.MiniProducto;
 import com.example.provedorapp.componentes.PrecioView;
 import com.example.provedorapp.databinding.ItemMiniProductoBinding;
+
+import org.w3c.dom.Text;
 
 
 public class MiniProductosAdapter extends ListAdapter<MiniProducto
@@ -57,6 +60,19 @@ public class MiniProductosAdapter extends ListAdapter<MiniProducto
 //                    context.getResources().getColor(R.color.black));
         }
 
+        holder.tvStock.setText(String.valueOf(miniProducto.getStock()));
+        if (miniProducto.getStock() == 0){
+            holder.tvStock.setTextColor(context.getResources().getColor(R.color.producto_agotado));
+        } else {
+            holder.tvStock.setTextColor(context.getResources().getColor(R.color.contrasteCeleste));
+        }
+        holder.tvStock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onStockClick(miniProducto);
+            }
+        });
+
 
 
     }
@@ -70,6 +86,7 @@ public class MiniProductosAdapter extends ListAdapter<MiniProducto
         private ImageView imgProducto;
         private PrecioView precioView;
         private TextView tvVariacion;
+        private TextView tvStock;
         private TextView tvNombreProducto;
 
         public MiniProductoView(@NonNull ItemMiniProductoBinding binding) {
@@ -78,12 +95,14 @@ public class MiniProductosAdapter extends ListAdapter<MiniProducto
             precioView = binding.precioView;
             tvVariacion = binding.tvVariacion;
             tvNombreProducto = binding.tvNombreProducto;
+            tvStock = binding.tvStock;
         }
     }
 
     public interface OnProductoClick{
         public boolean onAgregarPedido(MiniProducto producto);
         public void onVerProducto(MiniProducto producto);
+        public void onStockClick(MiniProducto producto);
     }
 
 

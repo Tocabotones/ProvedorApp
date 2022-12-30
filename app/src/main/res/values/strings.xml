@@ -4,4 +4,16 @@
     <string name="title_pedidos">Pedidos</string>
     <string name="title_pedido_actual">Pedido Actual</string>
     <string name="buscar">Buscar</string>
+    <string name="nombre_contacto">Persona de Contacto</string>
+    <string name="nombre_tienda">Nombre de Tienda</string>
+    <string name="nombre_factura">Nombre de Factura</string>
+    <string name="dni_cliente">DNI del cliente</string>
+    <string name="direccion">Dirección</string>
+    <string name="retencion">Retención</string>
+    <string name="presentacion">Presentación</string>
+    <string name="stock">Stock</string>
+    <string name="agregar">Agregar</string>
+    <string name="disminuir">Disminuir</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

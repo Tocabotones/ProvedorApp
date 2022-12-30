@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.clientes.ClientesFragment">
+
+    <Spinner
+        android:id="@+id/spnClientes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTituloNombreTienda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/nombre_tienda"
+        android:textColor="@color/contrasteCeleste"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/spnClientes"
+        app:layout_constraintStart_toStartOf="@+id/spnClientes"
+        app:layout_constraintTop_toBottomOf="@+id/spnClientes" />
+
+    <TextView
+        android:id="@+id/tvNombreTienda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvTituloNombreTienda"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloNombreTienda"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloNombreTienda" />
+
+    <TextView
+        android:id="@+id/tvTituloPersonaContacto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/nombre_contacto"
+        android:textColor="@color/contrasteCeleste"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/spnClientes"
+        app:layout_constraintStart_toStartOf="@+id/spnClientes"
+        app:layout_constraintTop_toBottomOf="@+id/tvNombreTienda" />
+
+    <TextView
+        android:id="@+id/tvPersonaContacto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvTituloPersonaContacto"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloPersonaContacto"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloPersonaContacto" />
+
+    <TextView
+        android:id="@+id/tvNombreFactura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvTituloNombreFactura"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloNombreFactura"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloNombreFactura" />
+
+    <TextView
+        android:id="@+id/tvTituloNombreFactura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/nombre_factura"
+        android:textColor="@color/contrasteCeleste"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/spnClientes"
+        app:layout_constraintStart_toStartOf="@+id/spnClientes"
+        app:layout_constraintTop_toBottomOf="@+id/tvPersonaContacto" />
+
+    <TextView
+        android:id="@+id/tvTituloDni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/dni_cliente"
+        android:textColor="@color/contrasteCeleste"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/spnClientes"
+        app:layout_constraintStart_toStartOf="@+id/spnClientes"
+        app:layout_constraintTop_toBottomOf="@+id/tvNombreFactura" />
+
+    <TextView
+        android:id="@+id/tvDni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvTituloDni"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloDni"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloDni" />
+
+    <TextView
+        android:id="@+id/tvTituloDireccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/direccion"
+        android:textColor="@color/contrasteCeleste"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/spnClientes"
+        app:layout_constraintStart_toStartOf="@+id/spnClientes"
+        app:layout_constraintTop_toBottomOf="@+id/tvDni" />
+
+    <TextView
+        android:id="@+id/tvDireccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvTituloDireccion"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloDireccion"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloDireccion" />
+
+    <TextView
+        android:id="@+id/tvTituloRetencion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/retencion"
+        android:textColor="@color/contrasteCeleste"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/spnClientes"
+        app:layout_constraintStart_toStartOf="@+id/spnClientes"
+        app:layout_constraintTop_toBottomOf="@+id/tvDireccion" />
+
+    <TextView
+        android:id="@+id/tvRetencion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvTituloRetencion"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloRetencion"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloRetencion" />
+</androidx.constraintlayout.widget.ConstraintLayout>

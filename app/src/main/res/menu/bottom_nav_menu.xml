@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/navigation_productos"
@@ -15,5 +16,9 @@
         android:id="@+id/navigation_pedidos_actual"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/title_pedido_actual"/>
+    <item
+        android:id="@+id/navigation_clientes"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="Clientes" />
 
 </menu>

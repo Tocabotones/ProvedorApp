@@ -3,27 +3,15 @@ package com.example.provedorapp;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
-import android.os.FileUtils;
 
 import androidx.annotation.Nullable;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SQLite extends SQLiteOpenHelper {
 
@@ -42,7 +30,8 @@ public class SQLite extends SQLiteOpenHelper {
                 " ,nombreCategoria INTEGER NOT NULL, imgPath TEXT)");
 
         db.execSQL("CREATE TABLE clientes( idCliente INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL" +
-                ", tienda INTEGER, nombreCompletoPr TEXT, dniPropietario INTEGER)");
+                ", nombreContacto TEXT, nombreTienda TEXT, nombreFactura TEXT, dniPropietario TEXT" +
+                ", direccion TEXT, retencion Integer)");
 
         db.execSQL("CREATE TABLE pedidos (idPedido INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 " idCliente INTEGER, retencion INTEGER NOT NULL," +
@@ -64,9 +53,10 @@ public class SQLite extends SQLiteOpenHelper {
                 "FOREIGN KEY(idPedido) REFERENCES pedidos(idPedido), " +
                 "PRIMARY KEY (idPedido,idProducto,variante))");
 
-        exportarCategorias(db);
-        exportarProductos(db);
-        exportarVariantes(db);
+        importarCategorias(db);
+        importarProductos(db);
+        importarVariantes(db);
+        importarClientes(db);
 
 
 
@@ -79,7 +69,7 @@ public class SQLite extends SQLiteOpenHelper {
 
 
 
-    public void exportarCategorias(SQLiteDatabase db){
+    public void importarCategorias(SQLiteDatabase db){
 
         InputStream is =  context.getResources().openRawResource(R.raw.categorias);
         BufferedReader buffer = new BufferedReader(new InputStreamReader(is));
@@ -101,7 +91,7 @@ public class SQLite extends SQLiteOpenHelper {
         }
     }
 
-    public void exportarProductos(SQLiteDatabase db){
+    public void importarProductos(SQLiteDatabase db){
 
         InputStream is =  context.getResources().openRawResource(R.raw.productos);
         BufferedReader buffer = new BufferedReader(new InputStreamReader(is));
@@ -124,7 +114,7 @@ public class SQLite extends SQLiteOpenHelper {
         }
     }
 
-    public void exportarVariantes(SQLiteDatabase db){
+    public void importarVariantes(SQLiteDatabase db){
 
         InputStream is =  context.getResources().openRawResource(R.raw.variantes);
         BufferedReader buffer = new BufferedReader(new InputStreamReader(is));
@@ -141,6 +131,32 @@ public class SQLite extends SQLiteOpenHelper {
                 cv.put("stock",columnas[4]);
                 cv.put("imgPath",columnas[5]);
                 db.insert("variantes",null,cv);
+            }
+            buffer.close();
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void importarClientes(SQLiteDatabase db){
+
+        InputStream is =  context.getResources().openRawResource(R.raw.clientes);
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(is));
+
+        try {
+            String fila;
+            while ((fila = buffer.readLine()) != null){
+                String [] columnas = fila.split(";");
+                ContentValues cv = new ContentValues();
+                cv.put("idCliente",columnas[0]);
+                cv.put("nombreContacto",columnas[1]);
+                cv.put("nombreTienda",columnas[2]);
+                cv.put("nombreFactura",columnas[3]);
+                cv.put("dniPropietario",columnas[4]);
+                cv.put("direccion",columnas[5]);
+                cv.put("retencion",columnas[6]);
+                db.insert("clientes",null,cv);
             }
             buffer.close();
             is.close();

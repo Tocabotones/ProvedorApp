@@ -22,4 +22,14 @@
         android:name="com.example.provedorapp.ui.pedidoActual.PedidoActualFragment"
         android:label="@string/title_pedido_actual"
         tools:layout="@layout/fragment_pedido_actual" />
+    <fragment
+        android:id="@+id/navigation_clientes"
+        android:name="com.example.provedorapp.ui.clientes.ClientesFragment"
+        android:label="fragment_clientes"
+        tools:layout="@layout/fragment_clientes" />
+    <fragment
+        android:id="@+id/navigation_detalles_productos"
+        android:name="com.example.provedorapp.ui.detallesProducto.DetallesProductosFragment"
+        android:label="fragment_detalles_productos"
+        tools:layout="@layout/fragment_detalles_productos" />
 </navigation>

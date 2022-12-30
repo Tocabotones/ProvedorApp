@@ -11,5 +11,6 @@
     <color name="celeste">#40CFFF</color>
     <color name="celesteClaro">#C2F0FF</color>
     <color name="contrasteCeleste">#ff7040</color>
+    <color name="producto_agotado">#CCC1C1</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#ff7040</color>
 </resources>
