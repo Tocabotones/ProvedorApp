@@ -1,5 +1,6 @@
 package com.example.provedorapp.ui.clientes;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -18,10 +19,14 @@ import com.example.provedorapp.SQLite;
 import com.example.provedorapp.clases.Cliente;
 import com.example.provedorapp.databinding.FragmentClientesBinding;
 import com.example.provedorapp.databinding.FragmentProductosBinding;
+import com.example.provedorapp.ui.gestionClientes.GestionClientes;
+import com.example.provedorapp.ui.gestionStock.GestionStock;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import com.example.provedorapp.ui.gestionClientes.GestionClientes;
 
 
 public class ClientesFragment extends Fragment {
@@ -31,6 +36,7 @@ public class ClientesFragment extends Fragment {
     private ArrayList<Cliente> clientes;
     private ArrayAdapter<Cliente> clientesAdapter;
     private Spinner spnClientes;
+    private FloatingActionButton fabClientes;
 
     private TextView tvNombreTienda;
     private TextView tvPersonaContacto;
@@ -53,6 +59,7 @@ public class ClientesFragment extends Fragment {
         tvDni = binding.tvDni;
         tvDireccion = binding.tvDireccion;
         tvRetencion = binding.tvRetencion;
+        fabClientes = binding.fabClientes;
 
         clientes = getClientes();
         clientesAdapter = new ArrayAdapter<>(getActivity()
@@ -64,7 +71,18 @@ public class ClientesFragment extends Fragment {
             Cliente c = (Cliente) spnClientes.getSelectedItem();
             actualizarInfoCliente(c);
         }
+
+        fabClientes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), GestionClientes.class);
+                startActivity(intent);
+            }
+        });
+
         return root;
+
+
     }
 
     public void actualizarInfoCliente(Cliente c){

@@ -14,6 +14,11 @@
     <string name="stock">Stock</string>
     <string name="agregar">Agregar</string>
     <string name="disminuir">Disminuir</string>
+    <string name="agregar_cliente">Agregar Cliente</string>
+    <string name="modificar_cliente">Modificar Cliente</string>
+    <string name="datos_factura">Datos de Factura</string>
+    <string name="cancelar">Cancelar</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="clientes">Clientes</string>
 </resources>

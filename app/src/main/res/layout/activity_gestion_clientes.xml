@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.gestionClientes.GestionClientes">
+
+  <TextView
+      android:id="@+id/tvTituloOperacionCliente"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="32dp"
+      android:text="@string/agregar_cliente"
+      android:textColor="@color/contrasteCeleste"
+      android:textSize="48sp"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+      android:id="@+id/tvTituloOperacionCliente2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="32dp"
+      android:text="@string/datos_factura"
+      android:textColor="@color/contrasteCeleste"
+      android:textSize="34sp"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tInLayNomContacto" />
+
+  <View
+      android:id="@+id/dividerTitulo"
+      android:layout_width="0dp"
+      android:layout_height="5dp"
+      android:layout_marginTop="8dp"
+      android:background="@color/celeste"
+      android:backgroundTint="@color/celeste"
+      app:layout_constraintEnd_toEndOf="@+id/tvTituloOperacionCliente"
+      app:layout_constraintStart_toStartOf="@+id/tvTituloOperacionCliente"
+      app:layout_constraintTop_toBottomOf="@+id/tvTituloOperacionCliente" />
+
+  <View
+      android:id="@+id/dividerDatosFac"
+      android:layout_width="0dp"
+      android:layout_height="5dp"
+      android:layout_marginTop="8dp"
+      android:background="@color/celeste"
+      android:backgroundTint="@color/celeste"
+      app:layout_constraintEnd_toEndOf="@+id/tvTituloOperacionCliente2"
+      app:layout_constraintHorizontal_bias="1.0"
+      app:layout_constraintStart_toStartOf="@+id/tvTituloOperacionCliente2"
+      app:layout_constraintTop_toBottomOf="@+id/tvTituloOperacionCliente2" />
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/tInLayNomTienda"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="120dp"
+      android:layout_marginTop="32dp"
+      android:layout_marginEnd="120dp"
+      android:hint="@string/nombre_tienda"
+      android:textColorHint="@color/contrasteCeleste"
+      app:boxStrokeWidth="2dp"
+      app:hintTextColor="@color/contrasteCeleste"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/dividerTitulo"
+      app:startIconDrawable="@drawable/ic_baseline_archive_24">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCtvNombreTienda"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:dropDownHeight="300dp"
+        android:inputType="text"
+        android:textColorHint="@color/contrasteCeleste" />
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/tInLayNomContacto"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="120dp"
+      android:layout_marginTop="24dp"
+      android:layout_marginEnd="120dp"
+      android:hint="@string/nombre_contacto"
+      android:textColorHint="@color/contrasteCeleste"
+      app:hintTextColor="@color/contrasteCeleste"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tInLayNomTienda"
+      app:startIconDrawable="@drawable/ic_baseline_archive_24">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCtvNomContacto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:dropDownHeight="300dp"
+        android:inputType="text"
+        android:textColorHint="@color/contrasteCeleste" />
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/tInLayNomFactura"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="120dp"
+      android:layout_marginTop="24dp"
+      android:layout_marginEnd="120dp"
+      android:hint="@string/nombre_factura"
+      android:textColorHint="@color/contrasteCeleste"
+      app:hintTextColor="@color/contrasteCeleste"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/dividerDatosFac"
+      app:startIconDrawable="@drawable/ic_baseline_archive_24">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCtvNomFactura"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:dropDownHeight="300dp"
+        android:inputType="text"
+        android:textColorHint="@color/contrasteCeleste" />
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/tInLayDni"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="120dp"
+      android:layout_marginTop="24dp"
+      android:layout_marginEnd="120dp"
+      android:hint="@string/dni_cliente"
+      android:textColorHint="@color/contrasteCeleste"
+      app:hintTextColor="@color/contrasteCeleste"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tInLayNomFactura"
+      app:startIconDrawable="@drawable/ic_baseline_archive_24">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCtvDni"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:dropDownHeight="300dp"
+        android:inputType="text"
+        android:textColorHint="@color/contrasteCeleste" />
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/tInLayDir"
+      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="120dp"
+      android:layout_marginTop="24dp"
+      android:layout_marginEnd="120dp"
+      android:hint="@string/direccion"
+      android:textColorHint="@color/contrasteCeleste"
+      app:hintTextColor="@color/contrasteCeleste"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tInLayDni"
+      app:startIconDrawable="@drawable/ic_baseline_archive_24">
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCtvDir"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:dropDownHeight="300dp"
+        android:inputType="text"
+        android:textColorHint="@color/contrasteCeleste" />
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <CheckBox
+      android:id="@+id/checkBox"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="24dp"
+      android:buttonTint="@color/celeste"
+      android:text="@string/retencion"
+      android:textColor="@color/contrasteCeleste"
+      android:textSize="20sp"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="@+id/tInLayDir"
+      app:layout_constraintTop_toBottomOf="@+id/tInLayDir" />
+
+  <Button
+      android:id="@+id/btnAgregarCliente"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="32dp"
+      android:backgroundTint="@color/contrasteCeleste"
+      android:text="@string/agregar"
+      android:textSize="20sp"
+      app:layout_constraintEnd_toStartOf="@+id/tvTituloOperacionCliente2"
+      app:layout_constraintStart_toStartOf="@+id/tvTituloOperacionCliente2"
+      app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+
+  <Button
+      android:id="@+id/btnCancelarCliente"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="32dp"
+      android:backgroundTint="@android:color/holo_red_light"
+      android:text="@string/cancelar"
+      android:textSize="20sp"
+      app:layout_constraintEnd_toEndOf="@+id/tvTituloOperacionCliente2"
+      app:layout_constraintStart_toEndOf="@+id/tvTituloOperacionCliente2"
+      app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

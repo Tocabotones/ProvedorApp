@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.clientes.ClientesFragment">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabClientes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_input_add"
+        app:fabSize="auto"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <Spinner
         android:id="@+id/spnClientes"
         android:layout_width="0dp"
@@ -13,6 +26,8 @@
         android:layout_marginStart="120dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="120dp"
+        android:contentDescription="@string/clientes"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
