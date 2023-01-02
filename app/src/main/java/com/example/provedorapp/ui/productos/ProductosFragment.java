@@ -10,12 +10,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -31,7 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.provedorapp.R;
-import com.example.provedorapp.SQLite;
+import com.example.provedorapp.server.SQLite;
 import com.example.provedorapp.adapter.CategoriasAdapter;
 import com.example.provedorapp.adapter.MiniProductosAdapter;
 import com.example.provedorapp.clases.Categoria;

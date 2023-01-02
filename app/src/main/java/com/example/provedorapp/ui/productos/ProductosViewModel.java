@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.provedorapp.SQLite;
-
 import java.util.ArrayList;
 
 public class ProductosViewModel extends ViewModel {

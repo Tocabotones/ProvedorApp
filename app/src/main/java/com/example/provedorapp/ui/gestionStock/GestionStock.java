@@ -6,16 +6,14 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.system.Os;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.provedorapp.R;
-import com.example.provedorapp.SQLite;
+import com.example.provedorapp.server.SQLite;
 import com.example.provedorapp.clases.MiniProducto;
 import com.example.provedorapp.databinding.ActivityGestionStockBinding;
 

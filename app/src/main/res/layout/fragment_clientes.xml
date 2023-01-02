@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentClientesCtl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.clientes.ClientesFragment">
@@ -36,14 +37,13 @@
         android:id="@+id/tvTituloNombreTienda"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="24dp"
         android:text="@string/nombre_tienda"
         android:textColor="@color/contrasteCeleste"
-        android:textSize="32sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/spnClientes"
         app:layout_constraintStart_toStartOf="@+id/spnClientes"
-        app:layout_constraintTop_toBottomOf="@+id/spnClientes" />
+        app:layout_constraintTop_toBottomOf="@+id/dividerDatosCliente" />
 
     <TextView
         android:id="@+id/tvNombreTienda"
@@ -61,14 +61,12 @@
         android:id="@+id/tvTituloPersonaContacto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:text="@string/nombre_contacto"
         android:textColor="@color/contrasteCeleste"
-        android:textSize="32sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/spnClientes"
-        app:layout_constraintStart_toStartOf="@+id/spnClientes"
-        app:layout_constraintTop_toBottomOf="@+id/tvNombreTienda" />
+        app:layout_constraintTop_toTopOf="@+id/tvTituloNombreTienda" />
 
     <TextView
         android:id="@+id/tvPersonaContacto"
@@ -102,11 +100,10 @@
         android:layout_marginTop="24dp"
         android:text="@string/nombre_factura"
         android:textColor="@color/contrasteCeleste"
-        android:textSize="32sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/spnClientes"
         app:layout_constraintStart_toStartOf="@+id/spnClientes"
-        app:layout_constraintTop_toBottomOf="@+id/tvPersonaContacto" />
+        app:layout_constraintTop_toBottomOf="@+id/dividerDatosCliente2" />
 
     <TextView
         android:id="@+id/tvTituloDni"
@@ -115,11 +112,10 @@
         android:layout_marginTop="24dp"
         android:text="@string/dni_cliente"
         android:textColor="@color/contrasteCeleste"
-        android:textSize="32sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/spnClientes"
-        app:layout_constraintStart_toStartOf="@+id/spnClientes"
-        app:layout_constraintTop_toBottomOf="@+id/tvNombreFactura" />
+        app:layout_constraintTop_toBottomOf="@+id/dividerDatosCliente2" />
 
     <TextView
         android:id="@+id/tvDni"
@@ -140,11 +136,11 @@
         android:layout_marginTop="24dp"
         android:text="@string/direccion"
         android:textColor="@color/contrasteCeleste"
-        android:textSize="32sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/spnClientes"
-        app:layout_constraintStart_toStartOf="@+id/spnClientes"
-        app:layout_constraintTop_toBottomOf="@+id/tvDni" />
+        app:layout_constraintEnd_toEndOf="@+id/tvTituloNombreFactura"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloNombreFactura"
+        app:layout_constraintTop_toBottomOf="@+id/tvNombreFactura" />
 
     <TextView
         android:id="@+id/tvDireccion"
@@ -154,8 +150,8 @@
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/tvTituloDireccion"
-        app:layout_constraintStart_toStartOf="@+id/tvTituloDireccion"
+        app:layout_constraintEnd_toEndOf="@+id/tvNombreFactura"
+        app:layout_constraintStart_toStartOf="@+id/tvNombreFactura"
         app:layout_constraintTop_toBottomOf="@+id/tvTituloDireccion" />
 
     <TextView
@@ -165,11 +161,11 @@
         android:layout_marginTop="24dp"
         android:text="@string/retencion"
         android:textColor="@color/contrasteCeleste"
-        android:textSize="32sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/spnClientes"
-        app:layout_constraintStart_toStartOf="@+id/spnClientes"
-        app:layout_constraintTop_toBottomOf="@+id/tvDireccion" />
+        app:layout_constraintEnd_toEndOf="@+id/tvTituloDni"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloDni"
+        app:layout_constraintTop_toBottomOf="@+id/tvDni" />
 
     <TextView
         android:id="@+id/tvRetencion"
@@ -182,4 +178,74 @@
         app:layout_constraintEnd_toEndOf="@+id/tvTituloRetencion"
         app:layout_constraintStart_toStartOf="@+id/tvTituloRetencion"
         app:layout_constraintTop_toBottomOf="@+id/tvTituloRetencion" />
+
+    <TextView
+        android:id="@+id/tvTituloDatosClientes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/datos_cliente"
+        android:textColor="@color/contrasteCeleste"
+        android:textSize="48sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnClientes" />
+
+    <View
+        android:id="@+id/dividerDatosCliente"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/celeste"
+        app:layout_constraintEnd_toEndOf="@+id/tvTituloDatosClientes"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloDatosClientes"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloDatosClientes" />
+
+    <View
+        android:id="@+id/dividerDatosCliente2"
+        android:layout_width="0dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/celeste"
+        app:layout_constraintEnd_toEndOf="@+id/tvTitutloDatosFactura"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/tvTitutloDatosFactura"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitutloDatosFactura" />
+
+    <TextView
+        android:id="@+id/tvTitutloDatosFactura"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/datos_factura"
+        android:textColor="@color/contrasteCeleste"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/spnClientes"
+        app:layout_constraintStart_toStartOf="@+id/spnClientes"
+        app:layout_constraintTop_toBottomOf="@+id/tvNombreTienda" />
+
+    <ImageButton
+        android:id="@+id/imgBtnMod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_baseline_settings_24"
+        app:layout_constraintBottom_toBottomOf="@+id/tvTituloDatosClientes"
+        app:layout_constraintStart_toEndOf="@+id/tvTituloDatosClientes"
+        app:layout_constraintTop_toTopOf="@+id/tvTituloDatosClientes" />
+
+    <ImageButton
+        android:id="@+id/imgBtnBorrarCliente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_baseline_delete_24"
+        app:layout_constraintBottom_toBottomOf="@+id/imgBtnMod"
+        app:layout_constraintStart_toEndOf="@+id/imgBtnMod"
+        app:layout_constraintTop_toTopOf="@+id/imgBtnMod"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

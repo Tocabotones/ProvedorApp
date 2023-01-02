@@ -1,4 +1,4 @@
-package com.example.provedorapp;
+package com.example.provedorapp.server;
 
 
 import android.content.ContentValues;
@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import com.example.provedorapp.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
