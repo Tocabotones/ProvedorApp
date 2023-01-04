@@ -24,6 +24,15 @@
     <string name="confirmar_afirmativo">Si, eliminar</string>
     <string name="confirmar_negativo">No</string>
     <string name="cliente_borrado">Cliente eliminado satisfactoriamente</string>
+    <string name="agregar_producto">Agregar Producto</string>
+    <string name="modificar_producto">Modificar Producto</string>
+    <string name="nombre_producto">Nombre del Producto</string>
+    <string name="categoria_producto">Categoria</string>
+    <string name="variantes_producto">Variantes</string>
+    <string name="variante_producto">Variante</string>
+    <string name="precio">Precio</string>
+    <string name="iva_producto">Tipo IVA</string>
+    <string name="url_img">Url de la Imagen</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="clientes">Clientes</string>

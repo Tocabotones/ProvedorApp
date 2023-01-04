@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="25dp"
+    android:layout_marginTop="25dp"
+    android:layout_marginBottom="25dp"
+    android:background="@drawable/style_rounded_boder"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tvTituloVariante"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Variante"
+        android:textColor="@color/celeste"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnBorrarVariante"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnBorrarVariante" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tInLayVariante"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/variante_producto"
+        android:textColorHint="@color/contrasteCeleste"
+        app:boxStrokeWidth="2dp"
+        app:hintTextColor="@color/contrasteCeleste"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tvTituloVariante"
+        app:layout_constraintTop_toBottomOf="@+id/btnBorrarVariante"
+        app:startIconDrawable="@drawable/ic_baseline_archive_24">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCtvVariante"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:dropDownHeight="300dp"
+            android:inputType="text"
+            android:textColorHint="@color/contrasteCeleste" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tInLayPrecio"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/precio"
+        android:textColorHint="@color/contrasteCeleste"
+        app:boxStrokeWidth="2dp"
+        app:hintTextColor="@color/contrasteCeleste"
+        app:layout_constraintEnd_toEndOf="@+id/tInLayVariante"
+        app:layout_constraintStart_toStartOf="@+id/tInLayVariante"
+        app:layout_constraintTop_toBottomOf="@+id/tInLayVariante"
+        app:startIconDrawable="@drawable/ic_baseline_euro_24">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCtvPrecio"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:dropDownHeight="300dp"
+            android:inputType="numberDecimal"
+            android:textColorHint="@color/contrasteCeleste" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tInLayStockIP"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/stock"
+        android:textColorHint="@color/contrasteCeleste"
+        app:hintTextColor="@color/contrasteCeleste"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tInLayPrecio"
+        app:layout_constraintStart_toStartOf="@+id/tInLayPrecio"
+        app:layout_constraintTop_toBottomOf="@+id/tInLayPrecio"
+        app:startIconDrawable="@drawable/ic_baseline_archive_24">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCtvStockIP"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:dropDownHeight="300dp"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/btnBorrarVariante"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_close_24" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

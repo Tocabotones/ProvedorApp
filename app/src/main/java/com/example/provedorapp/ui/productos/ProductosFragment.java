@@ -32,7 +32,9 @@ import com.example.provedorapp.adapter.MiniProductosAdapter;
 import com.example.provedorapp.clases.Categoria;
 import com.example.provedorapp.clases.MiniProducto;
 import com.example.provedorapp.databinding.FragmentProductosBinding;
+import com.example.provedorapp.ui.gestionProducto.GestionProductos;
 import com.example.provedorapp.ui.gestionStock.GestionStock;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -48,6 +50,7 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
     private ArrayList<MiniProducto> productos;
     private FragmentProductosBinding binding;
     private MiniProductosAdapter miniProductosAdapter;
+    private FloatingActionButton fabAgregarProducto;
     private RecyclerView recyclerProductos;
 
     private CategoriasAdapter categoriasAdapter;
@@ -80,6 +83,7 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
         categoria = -1;
         productos = getProductos();
 
+        fabAgregarProducto = binding.fabProductos;
         recyclerProductos = binding.recyclerProductos;
         recyclerProductos.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         miniProductosAdapter = new MiniProductosAdapter(getActivity(), this);
@@ -121,6 +125,13 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
             }
         });
 
+        fabAgregarProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), GestionProductos.class);
+                startActivity(intent);
+            }
+        });
         itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerProductos);
     }
