@@ -28,9 +28,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.provedorapp.R;
 import com.example.provedorapp.server.SQLite;
 import com.example.provedorapp.adapter.CategoriasAdapter;
-import com.example.provedorapp.adapter.MiniProductosAdapter;
+import com.example.provedorapp.adapter.ItemProductoAdapter;
 import com.example.provedorapp.clases.Categoria;
-import com.example.provedorapp.clases.MiniProducto;
+import com.example.provedorapp.clases.ItemProducto;
 import com.example.provedorapp.databinding.FragmentProductosBinding;
 import com.example.provedorapp.ui.gestionProducto.GestionProductos;
 import com.example.provedorapp.ui.gestionStock.GestionStock;
@@ -43,13 +43,13 @@ import java.util.Locale;
 
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
-public class ProductosFragment extends Fragment implements MiniProductosAdapter.OnProductoClick,
+public class ProductosFragment extends Fragment implements ItemProductoAdapter.OnProductoClick,
         CategoriasAdapter.OnCategoriaClick {
 
     private ItemTouchHelper itemTouchHelper;
-    private ArrayList<MiniProducto> productos;
+    private ArrayList<ItemProducto> productos;
     private FragmentProductosBinding binding;
-    private MiniProductosAdapter miniProductosAdapter;
+    private ItemProductoAdapter itemProductoAdapter;
     private FloatingActionButton fabAgregarProducto;
     private RecyclerView recyclerProductos;
 
@@ -86,9 +86,9 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
         fabAgregarProducto = binding.fabProductos;
         recyclerProductos = binding.recyclerProductos;
         recyclerProductos.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        miniProductosAdapter = new MiniProductosAdapter(getActivity(), this);
-        miniProductosAdapter.submitList(productos);
-        recyclerProductos.setAdapter(miniProductosAdapter);
+        itemProductoAdapter = new ItemProductoAdapter(getActivity(), this);
+        itemProductoAdapter.submitList(productos);
+        recyclerProductos.setAdapter(itemProductoAdapter);
 
 
         ArrayList<Categoria> categorias = getCategorias();
@@ -129,7 +129,7 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), GestionProductos.class);
-                startActivity(intent);
+                getIntentActivityResultLauncher.launch(intent);
             }
         });
         itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -142,9 +142,9 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
         binding = null;
     }
 
-    public ArrayList<MiniProducto> getProductos() {
+    public ArrayList<ItemProducto> getProductos() {
 
-        ArrayList<MiniProducto> miniProductos = new ArrayList<>();
+        ArrayList<ItemProducto> miniProductos = new ArrayList<>();
 
         SQLite sqLite = new SQLite(getActivity());
 
@@ -156,7 +156,7 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
                 "ORDER BY  stock DESC,productos.idProducto, valorVariante ", null);
 
         while (cursorProducto.moveToNext()) {
-            MiniProducto miniProducto = new MiniProducto();
+            ItemProducto miniProducto = new ItemProducto();
 
             miniProducto.setId(cursorProducto.getInt(0));
             miniProducto.setVariacion(cursorProducto.getString(1));
@@ -176,9 +176,9 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
 
         filtro = filtro.toLowerCase(Locale.ROOT);
 
-        ArrayList<MiniProducto> productosFiltrados = new ArrayList<>();
+        ArrayList<ItemProducto> productosFiltrados = new ArrayList<>();
 
-        for (MiniProducto mp : getProductos()) {
+        for (ItemProducto mp : getProductos()) {
             String[] nombre = mp.getNombre().split("\\s");
             int i = 0;
             boolean valido = false;
@@ -195,7 +195,7 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
 
 
         }
-        miniProductosAdapter.submitList(productosFiltrados);
+        itemProductoAdapter.submitList(productosFiltrados);
     }
 
     public ArrayList<Categoria> getCategorias() {
@@ -223,17 +223,17 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
 
     public void filtrarCategoria(int cat) {
         if (cat == -1) {
-            miniProductosAdapter.submitList(getProductos());
+            itemProductoAdapter.submitList(getProductos());
         } else {
-            ArrayList<MiniProducto> productosFiltrados = new ArrayList<>();
+            ArrayList<ItemProducto> productosFiltrados = new ArrayList<>();
 
-            for (MiniProducto mp : getProductos()) {
+            for (ItemProducto mp : getProductos()) {
                 if (mp.getCategoria() == cat) {
                     productosFiltrados.add(mp);
                 }
             }
 
-            miniProductosAdapter.submitList(productosFiltrados);
+            itemProductoAdapter.submitList(productosFiltrados);
         }
 
     }
@@ -271,13 +271,13 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
             int posicion = viewHolder.getLayoutPosition();
-            MiniProducto productoBorrado = productos.get(posicion);
+            ItemProducto productoBorrado = productos.get(posicion);
 
             switch (direction) {
                 case ItemTouchHelper.LEFT:
 
                     productos.remove(posicion);
-                    miniProductosAdapter.notifyItemRemoved(posicion);
+                    itemProductoAdapter.notifyItemRemoved(posicion);
 
                     deshacer(posicion, productoBorrado);
 
@@ -300,7 +300,7 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
                             BaseTransientBottomBar.LENGTH_SHORT).show();
 
                     productos.remove(posicion);
-                    miniProductosAdapter.notifyItemRemoved(posicion);
+                    itemProductoAdapter.notifyItemRemoved(posicion);
 
                     deshacer(posicion, productoBorrado);
 
@@ -310,24 +310,31 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
 
         }
 
-        public void deshacer(int posicion, MiniProducto productoBorrado) {
+        public void deshacer(int posicion, ItemProducto productoBorrado) {
             productos.add(posicion, productoBorrado);
-            miniProductosAdapter.notifyItemInserted(posicion);
+            itemProductoAdapter.notifyItemInserted(posicion);
         }
     };
 
     @Override
-    public boolean onAgregarPedido(MiniProducto producto) {
+    public boolean onAgregarPedido(ItemProducto producto) {
         return false;
     }
 
     @Override
-    public void onVerProducto(MiniProducto producto) {
+    public void onVerProducto(ItemProducto producto) {
 
     }
 
     @Override
-    public void onStockClick(MiniProducto producto) {
+    public void onModificar(ItemProducto producto) {
+        Intent intent = new Intent(getActivity(), GestionProductos.class);
+        intent.putExtra("idProducto",producto.getId());
+        getIntentActivityResultLauncher.launch(intent);
+    }
+
+    @Override
+    public void onStockClick(ItemProducto producto) {
         Intent intent = new Intent(getActivity(), GestionStock.class);
         intent.putExtra("idProducto", producto.getId());
         intent.putExtra("valorVariante", producto.getVariacion());
@@ -350,8 +357,8 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
                     if (result.getResultCode() == 1) {
                         productos.clear();
                         productos = getProductos();
-                        miniProductosAdapter.submitList(productos);
-                        recyclerProductos.setAdapter(miniProductosAdapter);
+                        itemProductoAdapter.submitList(productos);
+                        recyclerProductos.setAdapter(itemProductoAdapter);
                         filtrarCategoria(categoria);
                         String cadena = etxBuscador.getText().toString();
                         filtrar(cadena);
@@ -360,4 +367,24 @@ public class ProductosFragment extends Fragment implements MiniProductosAdapter.
                 }
             }
     );
+
+    ActivityResultLauncher<Intent> getIntentActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+
+                    if(result.getResultCode() == -1){
+                        productos.clear();
+                        productos = getProductos();
+                        itemProductoAdapter.submitList(productos);
+                        recyclerProductos.setAdapter(itemProductoAdapter);
+                        filtrarCategoria(categoria);
+                        String cadena = etxBuscador.getText().toString();
+                        filtrar(cadena);
+                    }
+
+
+                }
+            });
 }

@@ -79,11 +79,9 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         android:hint="@string/stock"
         android:textColorHint="@color/contrasteCeleste"
         app:hintTextColor="@color/contrasteCeleste"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/tInLayPrecio"
         app:layout_constraintStart_toStartOf="@+id/tInLayPrecio"
         app:layout_constraintTop_toBottomOf="@+id/tInLayPrecio"
@@ -96,6 +94,32 @@
             android:layout_weight="1"
             android:dropDownHeight="300dp"
             android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tInLayImgPathGP"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/url_img"
+        android:textColorHint="@color/contrasteCeleste"
+        app:boxStrokeWidth="2dp"
+        app:hintTextColor="@color/contrasteCeleste"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tInLayStockIP"
+        app:layout_constraintTop_toBottomOf="@+id/tInLayStockIP"
+        app:startIconDrawable="@drawable/ic_baseline_archive_24">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCtvImgPathGP"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:dropDownHeight="300dp"
+            android:inputType="text"
+            android:textColorHint="@color/contrasteCeleste" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton

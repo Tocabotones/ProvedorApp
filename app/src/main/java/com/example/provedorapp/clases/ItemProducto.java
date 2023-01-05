@@ -1,10 +1,9 @@
 package com.example.provedorapp.clases;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 
-public class MiniProducto {
+public class ItemProducto {
 
     private int id;
     private String variacion;
@@ -87,14 +86,14 @@ public class MiniProducto {
         this.img = img;
     }
 
-    public static DiffUtil.ItemCallback<MiniProducto> itemCallback = new DiffUtil.ItemCallback<MiniProducto>() {
+    public static DiffUtil.ItemCallback<ItemProducto> itemCallback = new DiffUtil.ItemCallback<ItemProducto>() {
         @Override
-        public boolean areItemsTheSame(@NonNull MiniProducto oldItem, @NonNull MiniProducto newItem) {
+        public boolean areItemsTheSame(@NonNull ItemProducto oldItem, @NonNull ItemProducto newItem) {
             return false;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull MiniProducto oldItem, @NonNull MiniProducto newItem) {
+        public boolean areContentsTheSame(@NonNull ItemProducto oldItem, @NonNull ItemProducto newItem) {
             return false;
         }
     };

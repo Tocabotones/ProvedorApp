@@ -132,14 +132,13 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:minHeight="335dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dividerVariantesGP" />
 
     <Button
-        android:id="@+id/btnAgregarProductoGP"
+        android:id="@+id/btnCancelarGP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="120dp"
@@ -152,7 +151,7 @@
         app:layout_constraintTop_toBottomOf="@+id/recyclerVariantes" />
 
     <Button
-        android:id="@+id/btnCancelarGP"
+        android:id="@+id/btnAgregarProductoGP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"

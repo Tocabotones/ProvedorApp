@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.example.provedorapp.R;
 import com.example.provedorapp.server.SQLite;
-import com.example.provedorapp.clases.MiniProducto;
+import com.example.provedorapp.clases.ItemProducto;
 import com.example.provedorapp.databinding.ActivityGestionStockBinding;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class GestionStock extends AppCompatActivity {
         btnAgregar = binding.btnAgregarStock;
         btnDisminuir = binding.btnDisminuirStock;
 
-        MiniProducto miniProducto;
+        ItemProducto miniProducto;
 
         int idProducto = getIntent().getIntExtra("idProducto",0);
         String valorVariante = getIntent().getStringExtra("valorVariante");
@@ -81,14 +81,14 @@ public class GestionStock extends AppCompatActivity {
         });
     }
 
-    private void inicializarCantidad(MiniProducto producto){
+    private void inicializarCantidad(ItemProducto producto){
         numerosAdapter = new ArrayAdapter<>(this
                 , R.layout.spinner_item_cantidad_stock, numerosLlenado(producto
                 ,MAX_NUMEROS_STOCK + producto.getStock()));
         autoCtvStock.setAdapter(numerosAdapter);
     }
 
-    private ArrayList<Integer> numerosLlenado(MiniProducto producto,int numeros){
+    private ArrayList<Integer> numerosLlenado(ItemProducto producto, int numeros){
         ArrayList<Integer> numerosList = new ArrayList<>();
 
         for (int i = 0; i <= numeros; i++) {
@@ -98,9 +98,9 @@ public class GestionStock extends AppCompatActivity {
         return numerosList;
     }
 
-    public MiniProducto getProducto(Integer idProducto,String valorVariante) {
+    public ItemProducto getProducto(Integer idProducto, String valorVariante) {
 
-        MiniProducto miniProducto = null;
+        ItemProducto miniProducto = null;
 
         SQLite sqLite = new SQLite(this);
 
@@ -114,7 +114,7 @@ public class GestionStock extends AppCompatActivity {
                 + "' AND valorVariante = '" + valorVariante + "'", null);
 
         if (cursorProducto.moveToNext()) {
-            miniProducto = new MiniProducto();
+            miniProducto = new ItemProducto();
 
             miniProducto.setId(cursorProducto.getInt(0));
             miniProducto.setVariacion(cursorProducto.getString(1));
@@ -133,7 +133,7 @@ public class GestionStock extends AppCompatActivity {
         return miniProducto;
     }
 
-    private void agregarStock(MiniProducto producto){
+    private void agregarStock(ItemProducto producto){
         SQLite helper = new SQLite(this);
         SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -153,7 +153,7 @@ public class GestionStock extends AppCompatActivity {
         finish();
     }
 
-    private void disminuirStock(MiniProducto producto){
+    private void disminuirStock(ItemProducto producto){
         SQLite helper = new SQLite(this);
         SQLiteDatabase db = helper.getWritableDatabase();
 

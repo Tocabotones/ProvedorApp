@@ -1,6 +1,7 @@
 package com.example.provedorapp.clases;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 
 public class Categoria {
@@ -12,10 +13,26 @@ public class Categoria {
     public Categoria() {
     }
 
+    public Categoria(int id) {
+        this.id = id;
+    }
+
     public Categoria(int id, String categoria, String img) {
         this.id = id;
         this.categoria = categoria;
         this.img = img;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return categoria;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        Categoria c2 = (Categoria) obj;
+        return id == c2.getId();
     }
 
     public int getId() {

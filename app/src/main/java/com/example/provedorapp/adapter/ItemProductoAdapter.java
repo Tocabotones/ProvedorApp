@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,21 +14,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.provedorapp.R;
-import com.example.provedorapp.clases.MiniProducto;
+import com.example.provedorapp.clases.ItemProducto;
 import com.example.provedorapp.componentes.PrecioView;
 import com.example.provedorapp.databinding.ItemMiniProductoBinding;
 
-import org.w3c.dom.Text;
 
-
-public class MiniProductosAdapter extends ListAdapter<MiniProducto
-        , MiniProductosAdapter.MiniProductoView> {
+public class ItemProductoAdapter extends ListAdapter<ItemProducto
+        , ItemProductoAdapter.MiniProductoView> {
 
     private OnProductoClick listener;
     private Context context;
 
-    public MiniProductosAdapter(Context context,OnProductoClick listener) {
-        super(MiniProducto.itemCallback);
+    public ItemProductoAdapter(Context context, OnProductoClick listener) {
+        super(ItemProducto.itemCallback);
         this.context = context;
         this.listener = listener;
     }
@@ -43,25 +42,28 @@ public class MiniProductosAdapter extends ListAdapter<MiniProducto
 
     @Override
     public void onBindViewHolder(@NonNull MiniProductoView holder, int position) {
-        MiniProducto miniProducto = getItem(position);
+        ItemProducto itemProducto = getItem(position);
 
 
-        holder.tvNombreProducto.setText(miniProducto.getNombre());
-        holder.tvVariacion.setText(miniProducto.getVariacion());
-        Glide.with(context)
-                .load(miniProducto.getImg())
-                .into(holder.imgProducto);
+        holder.tvNombreProducto.setText(itemProducto.getNombre());
+        holder.tvVariacion.setText(itemProducto.getVariacion());
+        if(!holder.imgProducto.equals("")){
+            Glide.with(context)
+                    .load(itemProducto.getImg())
+                    .into(holder.imgProducto);
+        }
 
 
-        if (miniProducto.getPrecioDescuento() == 0.0){
-            holder.precioView.setPrecio(miniProducto.getPrecio(),24,
+
+        if (itemProducto.getPrecioDescuento() == 0.0){
+            holder.precioView.setPrecio(itemProducto.getPrecio(),24,
                     context.getResources().getColor(R.color.contrasteCeleste));
 //            holder.frgPrecio.setPrecioDecoration(miniProducto.getPrecio(),24,
 //                    context.getResources().getColor(R.color.black));
         }
 
-        holder.tvStock.setText(String.valueOf(miniProducto.getStock()));
-        if (miniProducto.getStock() == 0){
+        holder.tvStock.setText(String.valueOf(itemProducto.getStock()));
+        if (itemProducto.getStock() == 0){
             holder.tvStock.setTextColor(context.getResources().getColor(R.color.producto_agotado));
         } else {
             holder.tvStock.setTextColor(context.getResources().getColor(R.color.contrasteCeleste));
@@ -69,10 +71,15 @@ public class MiniProductosAdapter extends ListAdapter<MiniProducto
         holder.tvStock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onStockClick(miniProducto);
+                listener.onStockClick(itemProducto);
             }
         });
-
+        holder.imgBtnModificar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onModificar(itemProducto);
+            }
+        });
 
 
     }
@@ -88,6 +95,7 @@ public class MiniProductosAdapter extends ListAdapter<MiniProducto
         private TextView tvVariacion;
         private TextView tvStock;
         private TextView tvNombreProducto;
+        private ImageButton imgBtnModificar;
 
         public MiniProductoView(@NonNull ItemMiniProductoBinding binding) {
             super(binding.getRoot());
@@ -96,13 +104,15 @@ public class MiniProductosAdapter extends ListAdapter<MiniProducto
             tvVariacion = binding.tvVariacion;
             tvNombreProducto = binding.tvNombreProducto;
             tvStock = binding.tvStock;
+            imgBtnModificar = binding.imgBtnModificar;
         }
     }
 
     public interface OnProductoClick{
-        public boolean onAgregarPedido(MiniProducto producto);
-        public void onVerProducto(MiniProducto producto);
-        public void onStockClick(MiniProducto producto);
+        public void onModificar(ItemProducto producto);
+        public boolean onAgregarPedido(ItemProducto producto);
+        public void onVerProducto(ItemProducto producto);
+        public void onStockClick(ItemProducto producto);
     }
 
 

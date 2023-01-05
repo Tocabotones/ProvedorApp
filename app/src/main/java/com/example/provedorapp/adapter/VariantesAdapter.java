@@ -11,23 +11,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.provedorapp.R;
-import com.example.provedorapp.clases.MiniProducto;
 import com.example.provedorapp.clases.Variante;
-import com.example.provedorapp.componentes.PrecioView;
-import com.example.provedorapp.databinding.ItemMiniProductoBinding;
 import com.example.provedorapp.databinding.ItemVarianteBinding;
-import com.example.provedorapp.server.SQLQueries;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -57,6 +49,15 @@ public class VariantesAdapter extends ListAdapter<Variante
     @Override
     public void onBindViewHolder(@NonNull VarianteView holder, int position) {
         Variante variante = getItem(position);
+
+        if (!variante.getVariante().isEmpty()) {
+            holder.autoCtvVariante.setText(variante.getVariante());
+        }
+
+        holder.autoCtvPrecio.setText(String.valueOf(variante.getPrecio()));
+        holder.autoCtvStock.setText(String.valueOf(variante.getStock()),false);
+
+        holder.autoCtvImgPath.setText(variante.getImg());
 
         holder.autoCtvVariante.addTextChangedListener(new TextWatcher() {
             @Override
@@ -92,10 +93,21 @@ public class VariantesAdapter extends ListAdapter<Variante
 
             @Override
             public void afterTextChanged(Editable editable) {
-                String cadena = editable.toString();
-                double precio = Double.parseDouble(cadena);
 
-                variante.setPrecio(precio);
+                boolean escribiendo = false;
+                if (!escribiendo) {
+                    String cadena = editable.toString();
+                    double precio;
+                    if (cadena.isEmpty()) {
+                        precio = 0.0;
+                        variante.setPrecio(precio);
+                    } else {
+                        precio = Double.parseDouble(cadena);
+                        variante.setPrecio(precio);
+                    }
+                }
+
+
             }
         });
 
@@ -119,6 +131,24 @@ public class VariantesAdapter extends ListAdapter<Variante
             }
         });
 
+        holder.autoCtvImgPath.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String cadena = editable.toString();
+                variante.setImg(cadena);
+            }
+        });
+
         holder.btnBorrarVariante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,7 +158,7 @@ public class VariantesAdapter extends ListAdapter<Variante
                                 , new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        listener.onBorrarClick(holder.getBindingAdapterPosition(),variante);
+                                        listener.onBorrarClick(holder.getBindingAdapterPosition(), variante);
                                     }
                                 })
                         .setNegativeButton(context.getResources().getString(R.string.confirmar_negativo), new DialogInterface.OnClickListener() {
@@ -146,9 +176,7 @@ public class VariantesAdapter extends ListAdapter<Variante
         });
 
 
-
     }
-
 
 
     // CLASES Y INTERFACES
@@ -161,6 +189,7 @@ public class VariantesAdapter extends ListAdapter<Variante
         private final AutoCompleteTextView autoCtvVariante;
         private final AutoCompleteTextView autoCtvPrecio;
         private final AutoCompleteTextView autoCtvStock;
+        private final AutoCompleteTextView autoCtvImgPath;
         private final ImageButton btnBorrarVariante;
 
 
@@ -172,19 +201,21 @@ public class VariantesAdapter extends ListAdapter<Variante
             autoCtvVariante = binding.autoCtvVariante;
             autoCtvPrecio = binding.autoCtvPrecio;
             autoCtvStock = binding.autoCtvStockIP;
+            autoCtvImgPath = binding.autoCtvImgPathGP;
             btnBorrarVariante = binding.btnBorrarVariante;
+
 
             inicializarCantidad();
 
         }
 
-        private void inicializarCantidad(){
+        private void inicializarCantidad() {
             numerosAdapter = new ArrayAdapter<>(context
-                    , R.layout.spinner_item_cantidad_stock,  numerosLlenado());
+                    , R.layout.spinner_item_cantidad_stock, numerosLlenado());
             autoCtvStock.setAdapter(numerosAdapter);
         }
 
-        private ArrayList<Integer> numerosLlenado(){
+        private ArrayList<Integer> numerosLlenado() {
             ArrayList<Integer> numerosList = new ArrayList<>();
 
             for (int i = MIN_STOCK; i <= MAX_STOCK; i++) {
@@ -195,8 +226,18 @@ public class VariantesAdapter extends ListAdapter<Variante
         }
     }
 
-    public interface OnVarianteClick{
-          void onBorrarClick(int posicion, Variante variante);
+    public ArrayList<Variante> getList() {
+        ArrayList<Variante> variantes = new ArrayList<>();
+
+        for (int i = 0; i < getItemCount(); i++) {
+            variantes.add(getItem(i));
+        }
+
+        return variantes;
+    }
+
+    public interface OnVarianteClick {
+        void onBorrarClick(int posicion, Variante variante);
     }
 
 
