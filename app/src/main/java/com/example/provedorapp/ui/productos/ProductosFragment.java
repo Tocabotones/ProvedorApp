@@ -1,5 +1,7 @@
 package com.example.provedorapp.ui.productos;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.provedorapp.R;
+import com.example.provedorapp.server.SQLQueries;
 import com.example.provedorapp.server.SQLite;
 import com.example.provedorapp.adapter.CategoriasAdapter;
 import com.example.provedorapp.adapter.ItemProductoAdapter;
@@ -252,8 +255,8 @@ public class ProductosFragment extends Fragment implements ItemProductoAdapter.O
             float myDx = 0;
 
             new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-//                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(getActivity(),R.color.red))
-//                    .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_24)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(getActivity(),R.color.red))
+                    .addSwipeLeftActionIcon(R.drawable.ic_baseline_black_delete_24)
                     .addSwipeRightBackgroundColor(ContextCompat.getColor(getActivity(), R.color.celesteClaro))
                     .addSwipeRightActionIcon(R.drawable.ic_baseline_archive_24)
                     .create()
@@ -279,21 +282,44 @@ public class ProductosFragment extends Fragment implements ItemProductoAdapter.O
                     productos.remove(posicion);
                     itemProductoAdapter.notifyItemRemoved(posicion);
 
-                    deshacer(posicion, productoBorrado);
+                    AlertDialog dialogo = new AlertDialog
+                            .Builder(getActivity())
+                            .setPositiveButton(getActivity().getResources().getString(R.string.confirmar_afirmativo)
+                                    , new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            SQLQueries.eliminarProducto(productoBorrado,getActivity());
+                                            Snackbar snackbar = Snackbar.make(binding.fragmentCl,"Producto Eliminado",
+                                                            BaseTransientBottomBar.LENGTH_SHORT)
+                                                    .setAction("Deshacer", new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            deshacer(posicion,productoBorrado);
+                                                            Snackbar.make(binding.fragmentCl,
+                                                                    "El producto se ha vuelto a agregar",
+                                                                    BaseTransientBottomBar.LENGTH_SHORT);
+                                                        }
 
-////                    Snackbar snackbar = Snackbar.make(binding.fragmentCl,"Producto Eliminado",
-////                            BaseTransientBottomBar.LENGTH_SHORT)
-////                            .setAction("Deshacer", new View.OnClickListener() {
-////                                @Override
-////                                public void onClick(View view) {
-////                                    deshacer(posicion,productoBorrado);
-////                                    Snackbar.make(binding.fragmentCl,
-////                                            "El producto se ha vuelto a agregar",
-////                                            BaseTransientBottomBar.LENGTH_SHORT);
-////                                }
-////                            });
-////
-////                    snackbar.show();
+                                                    });
+//                                            snackbar.show();
+                                        }
+                                    })
+                            .setNegativeButton(getActivity().getResources().getString(R.string.confirmar_negativo), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    deshacer(posicion,productoBorrado);
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setTitle(getActivity().getResources().getString(R.string.confirmar_borrado))
+                            .setMessage("¿Deseas eliminar la variante " + productoBorrado.getNombre()
+                                    + "(" + productoBorrado.getVariacion() + ")" + " ?")
+                            .create();
+
+                    dialogo.show();
+
+
+
                     break;
                 case ItemTouchHelper.RIGHT:
                     Snackbar.make(binding.fragmentCl, "Producto agregado al pedido",

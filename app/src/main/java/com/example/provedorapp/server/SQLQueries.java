@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.example.provedorapp.clases.Categoria;
 import com.example.provedorapp.clases.Cliente;
 import com.example.provedorapp.clases.DatosFactura;
+import com.example.provedorapp.clases.ItemProducto;
 import com.example.provedorapp.clases.Producto;
 import com.example.provedorapp.clases.Variante;
 
@@ -189,6 +190,37 @@ public class SQLQueries {
 
     }
 
+//    public static void reInsertarProducto(ItemProducto itemProducto,Context context){
+//        SQLite helper = new SQLite(context);
+//        SQLiteDatabase db = helper.getWritableDatabase();
+//
+//        ContentValues cv = new ContentValues();
+//
+//        cv.put("nombreProducto",itemProducto.getNombre());
+//        cv.put("idCategoria",itemProducto.getCategoria());
+//        cv.put("tipoIVA",itemProducto.);
+//
+//        long idProducto = db.insert("productos",null,cv);
+//
+//        if (idProducto > 0){
+//
+//
+//
+//                ContentValues cvVariantes = new ContentValues();
+//                cvVariantes.put("idProducto", idProducto);
+//                cvVariantes.put("valorVariante",itemProducto.getVariacion());
+//                cvVariantes.put("precio",itemProducto.getPrecio());
+//                cvVariantes.put("stock",itemProducto.getStock());
+//                cvVariantes.put("imgPath",itemProducto.getImg());
+//
+//                db.insert("variantes",null,cvVariantes);
+//
+//        }
+//
+//        db.close();
+//        helper.close();
+//    }
+
     public static void borrarCliente(int idCliente,Context context){
 
         SQLite helper = new SQLite(context);
@@ -271,6 +303,20 @@ public class SQLQueries {
         db.close();
         helper.close();
 
+    }
+
+    public static void eliminarProducto(ItemProducto itemProducto,Context context){
+        SQLite helper = new SQLite(context);
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        String argsVariantes[] = {String.valueOf(itemProducto.getId()), itemProducto.getVariacion()};
+        db.delete("variates","idProducto=? AND valorVariante=?",argsVariantes);
+
+        String argsProducto[] = {String.valueOf(itemProducto.getId())};
+        db.delete("productos","idProducto=?",argsProducto);
+
+        db.close();
+        helper.close();
     }
 
 

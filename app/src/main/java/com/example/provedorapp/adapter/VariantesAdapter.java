@@ -183,7 +183,7 @@ public class VariantesAdapter extends ListAdapter<Variante
 
     public class VarianteView extends RecyclerView.ViewHolder {
         private final int MAX_STOCK = 100;
-        private final int MIN_STOCK = 1;
+        private final int MIN_STOCK = 0;
 
         private final TextView tvTituloVariante;
         private final AutoCompleteTextView autoCtvVariante;
